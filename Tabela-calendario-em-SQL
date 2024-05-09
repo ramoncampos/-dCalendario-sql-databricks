@@ -1,0 +1,48 @@
+select
+    data                                as dt_data
+    , year(data)                        as nb_ano
+    , date_format(data, 'yyyy-MM')      as tx_ano_mes
+    , date_format(data, 'yyyy-MMM')     as tx_ano_mes_en
+    , year(data)||'-'||initcap(
+        to_csv(
+            named_struct('date', data)
+            , map('dateFormat', 'MMM', 'locale', 'PT-BR')
+            )
+        ) as tx_ano_mes_ptbr
+    , month(data)                       as nb_mes
+    , initcap(
+        to_csv(
+            named_struct('date', data)
+            , map('dateFormat', 'MMM', 'locale', 'PT-BR')
+            )
+        ) as tx_mes_ptbr
+    , date_format(data, 'MMM')          as tx_mes_en
+    , day(data)                         as nb_dia
+    , weekofyear(data)                  as nb_semana_do_ano
+    , year(data)||format_number(weekofyear(data),'-00') as tx_ano_semana
+    , to_csv(
+        named_struct('date', data)
+        , map('dateFormat', 'E', 'locale', 'PT-BR')
+        ) as tx_dia_da_semana
+    , weekday(data)                     as nb_dia_semana_rm
+    , dayofweek(data)                   as nb_dia_semana
+    , "T"||quarter(data)                as tx_trimestre
+    , "B"||round(month(data)/2,0)::INT  as tx_bimmestre
+    , "S"||ceiling(month(data)/6)::INT  as tx_semestre
+    , case
+        when weekday(data) > 4 then 'Sim' else 'Não' end as tx_final_semana
+    , case
+        when year(data) = year(max(data) over())
+      then 'Sim' else 'Não' end as tx_ano_atual
+    , case
+        when date_format(data, 'yyyyMM') = date_format(max(data) over(), 'yyyyMM')
+      then 'Sim' else 'Não' end as tx_mes_atual
+    , case
+        when year(data)||format_number(weekofyear(data),'00') = year(max(data) over())||format_number(weekofyear(max(data) over()),'00')
+      then 'Sim' else 'Não' end as tx_ultima_semana
+from
+    ( select explode(sequence(                                                             -- Explode em linhas a sequência de datas
+        (select min(dt_data_emissao) FROM refined.t2mk_outp_sharegap_semanal_dashboards),  -- a partir desta data mínima
+        (select max(dt_data_emissao) FROM refined.t2mk_outp_sharegap_semanal_dashboards),  -- até esta data máxima,
+        INTERVAL 1 DAY) ) as data                                                          -- com intervalo de 1 dia
+    )  
