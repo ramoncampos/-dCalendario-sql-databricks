@@ -9,3 +9,4 @@ O racional para a geração desta tabela é: a partir das datas mínima e máxim
 
 Além das funções de inteligência de tempo, complementei a query com dados categóricos como `Último ano`, `Último mês` e `Última semana` utilizando a condicional ***CASE WHEN*** em conjunto com um ***Window Function***.
 
+<img src='screenshot_calendario_sql.png'>
