@@ -41,8 +41,8 @@ select
         when year(data)||format_number(weekofyear(data),'00') = year(max(data) over())||format_number(weekofyear(max(data) over()),'00')
       then 'Sim' else 'Não' end as tx_ultima_semana
 from
-    ( select explode(sequence(                                                             -- Explode em linhas a sequência de datas
-        (select min(dt_data_emissao) FROM refined.t2mk_outp_sharegap_semanal_dashboards),  -- a partir desta data mínima
-        (select max(dt_data_emissao) FROM refined.t2mk_outp_sharegap_semanal_dashboards),  -- até esta data máxima,
-        INTERVAL 1 DAY) ) as data                                                          -- com intervalo de 1 dia
+    ( select explode(sequence(                         -- Explode em linhas a sequência de datas
+        (select min(dt_data) FROM tabela_referencia),  -- a partir desta data mínima
+        (select max(dt_data) FROM tabela_referencia),  -- até esta data máxima,
+        INTERVAL 1 DAY) ) as data                      -- com intervalo de 1 dia
     )  
