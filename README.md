@@ -1,5 +1,5 @@
 # Minhas queries
-Neste repositório, compartilho algumas queries e análises em SQL.
+
 
 ___
 ### 📆 <a href='https://github.com/gustavokitagawa/SQL/blob/main/Tabela-calendario-em-SQL'>Tabela calendário</a>
