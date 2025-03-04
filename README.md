@@ -1,11 +1,7 @@
-# Minhas queries
-Neste repositório, compartilho algumas queries e análises em SQL.
+### 📆 <a href='https://github.com/ramoncampos/dCalendario-sql-databricks/blob/main/Tabela-calendario-em-SQL'>Tabela calendário</a>
+Meu objetivo aqui foi utilizar as funções SQL do Databricks para criar uma tabela dimensão de calendário.
 
-___
-### 📆 <a href='https://github.com/gustavokitagawa/SQL/blob/main/Tabela-calendario-em-SQL'>Tabela calendário</a>
-Aqui, eu me propus a utilizar as funções SQL do **Databricks** gerar uma tabela dimensão para calendário.
-
-O racional para a geração desta tabela é: a partir das datas mínima e máxima de uma tabela de referência, gero uma sequência de datas com intervalo de um dia. Essa sequência é enriquecida por colunas categóricas e numéricas úteis para uma análise: ano, mês, nome do dia da semana, semestre, bimestre, trimestre entre muitas outras.
+A lógica por trás dessa criação envolve definir a data mínima e máxima a partir de uma tabela de referência e, com isso, gerar uma sequência diária dentro desse intervalo. Em seguida, essa sequência é complementada com diversas colunas categóricas e numéricas que auxiliam na análise, como ano, mês, nome do dia da semana, semestre, bimestre, trimestre e outras informações relevantes.
 
 Além das funções de inteligência de tempo, complementei a query com dados categóricos como `Último ano`, `Último mês` e `Última semana` utilizando a condicional ***CASE WHEN*** em conjunto com um ***Window Function***.
 
